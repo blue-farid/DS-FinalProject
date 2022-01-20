@@ -28,6 +28,8 @@ public class Graph {
         }
         firstLs.addFirst(edge);
         secondLs.addFirst(edge);
+        this.adjacencyListMap.put(first, firstLs);
+        this.adjacencyListMap.put(second, secondLs);
         return res;
     }
 
@@ -40,9 +42,18 @@ public class Graph {
             res = res.concat(node.toString());
             res = res.concat(" edges: ");
             for (int i = 0; i < edges.size(); i++) {
-                res = res.concat(edges.get(i).toString().concat(", "));
+                res = res.concat(edges.get(i).toString(node).concat(", "));
             }
+            res = res.concat("\n");
         }
         return res;
+    }
+
+    public int getNodesCount() {
+        return nodesCount;
+    }
+
+    public int getEdgesCount() {
+        return edgesCount;
     }
 }
