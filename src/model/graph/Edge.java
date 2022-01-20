@@ -1,20 +1,20 @@
 package model.graph;
 
 public class Edge {
-    private final int source, destination, weight;
+    private final int first, second, weight;
 
-    public Edge(int source, int destination, int weight) {
-        this.source = source;
-        this.destination = destination;
+    public Edge(int first, int second, int weight) {
+        this.first = first;
+        this.second = second;
         this.weight = weight;
     }
 
-    public int getSource() {
-        return source;
+    public int getFirst() {
+        return first;
     }
 
-    public int getDestination() {
-        return destination;
+    public int getSecond() {
+        return second;
     }
 
     public int getWeight() {
