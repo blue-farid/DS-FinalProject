@@ -33,7 +33,17 @@ public class Edge {
         } else if (node.equals(second)) {
             return first + "";
         } else {
-            return "aha";
+            return "";
+        }
+    }
+
+    public Node getEdgeOf(Node node) {
+        if (node.equals(first)) {
+            return second;
+        } else if (node.equals(second)) {
+            return first;
+        } else {
+            return null;
         }
     }
 }
