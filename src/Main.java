@@ -1,6 +1,23 @@
+import model.graph.Graph;
+import model.graph.Node;
+
+import java.util.Scanner;
+
 public class Main {
 
     public static void main(String[] args) {
-	// write your code here
+        Scanner scanner = new Scanner(System.in);
+    }
+
+    private static Graph getGraphFromStdin(Scanner sc) {
+        int nodesCount = sc.nextInt();
+        int edgesCount = sc.nextInt();
+        Graph graph = new Graph(nodesCount, edgesCount);
+        sc.nextLine();
+        sc.nextLine(); //ignore the line of nodes input.
+        for (int i = 0; i < edgesCount; i++) {
+            graph.addEdge(new Node(sc.nextInt()), new Node(sc.nextInt()), sc.nextInt());
+        }
+        return graph;
     }
 }
