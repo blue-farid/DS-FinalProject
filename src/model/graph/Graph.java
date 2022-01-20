@@ -13,6 +13,51 @@ public class Graph {
         this.adjacencyListMap = new HashMap<>(edgesCount);
     }
 
+    public int[] dijkstra(Node src) {
+        Set<Node> nodes = this.adjacencyListMap.keySet();
+        if (!nodes.contains(src)) {
+            return null;
+        }
+        int[] distances = new int[this.nodesCount];
+        initDistances(distances);
+        PriorityQueue<Node> pq = new PriorityQueue<>();
+        src.setCost(0);
+        pq.add(src);
+        distances[src.getData()] = 0;
+        HashSet<Node> dones = new HashSet<>();
+        while (!pq.isEmpty() && dones.size() != this.nodesCount) {
+            Node minNode = pq.remove();
+            if (!dones.contains(minNode)) {
+                dones.add(minNode);
+                processEdges(src, dones, distances, pq);
+            }
+        }
+        return distances;
+    }
+
+    private int processEdges(Node node, Set<Node> dones, int[] distances, PriorityQueue<Node> pq) {
+        int edgeDst, newDst;
+        List<Edge> edges = this.adjacencyListMap.get(node);
+
+        for (Edge edge : edges) {
+            Node edgeNode = edge.getEdgeOf(node);
+            edgeNode.setCost(edge.getWeight());
+            if (!dones.contains(node)) {
+                edgeDst = edgeNode.getCost();
+                newDst = distances[node.getData()] + edgeDst;
+
+                if (newDst < distances[edgeNode.getData()]) {
+                    distances[edgeNode.getData()] = newDst;
+                }
+                pq.add(edgeNode);
+            }
+        }
+        return 0;
+    }
+    private int initDistances(int[] distances) {
+        Arrays.fill(distances, Integer.MAX_VALUE);
+        return 0;
+    }
     public boolean addEdge(Node first, Node second, int weight) {
         boolean res = true;
         Edge edge = new Edge(first, second, weight);
