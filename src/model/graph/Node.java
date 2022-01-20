@@ -2,8 +2,17 @@ package model.graph;
 
 import java.util.Objects;
 
-public class Node {
+public class Node implements Comparable<Node>{
     private final int data;
+    private int cost;
+
+    public void setCost(int cost) {
+        this.cost = cost;
+    }
+
+    public int getCost() {
+        return cost;
+    }
 
     public Node(int data) {
         this.data = data;
@@ -29,5 +38,10 @@ public class Node {
     @Override
     public String toString() {
         return data + "";
+    }
+
+    @Override
+    public int compareTo(Node o) {
+        return this.cost - o.cost;
     }
 }
