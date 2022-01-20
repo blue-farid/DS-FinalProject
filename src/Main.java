@@ -7,6 +7,8 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        Graph graph = getGraphFromStdin(scanner);
+        System.out.println(graph.toString());
     }
 
     private static Graph getGraphFromStdin(Scanner sc) {

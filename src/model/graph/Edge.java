@@ -1,5 +1,7 @@
 package model.graph;
 
+import java.util.Scanner;
+
 public class Edge {
     private final Node first, second;
     private final int weight;
@@ -20,5 +22,20 @@ public class Edge {
 
     public int getWeight() {
         return weight;
+    }
+
+    @Override
+    public String toString() {
+        return "(" + first + ", " + second + ")";
+    }
+
+    public String toString(Node node) {
+        if (node.equals(first)) {
+            return second + "";
+        } else if(node.equals(second)) {
+            return first + "";
+        } else {
+            return toString();
+        }
     }
 }

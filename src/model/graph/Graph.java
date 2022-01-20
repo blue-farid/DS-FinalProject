@@ -1,7 +1,6 @@
 package model.graph;
 
-import java.util.HashMap;
-import java.util.LinkedList;
+import java.util.*;
 
 public class Graph {
     private final int nodesCount;
@@ -29,6 +28,21 @@ public class Graph {
         }
         firstLs.addFirst(edge);
         secondLs.addFirst(edge);
+        return res;
+    }
+
+    public String toString() {
+        String res = "";
+        Iterator<Node> itr = this.adjacencyListMap.keySet().iterator();
+        while (itr.hasNext()) {
+            Node node = itr.next();
+            List<Edge> edges = this.adjacencyListMap.get(node);
+            res = res.concat(node.toString());
+            res = res.concat(" edges: ");
+            for (int i = 0; i < edges.size(); i++) {
+                res = res.concat(edges.get(i).toString().concat(", "));
+            }
+        }
         return res;
     }
 }
