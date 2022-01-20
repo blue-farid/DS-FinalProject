@@ -1,27 +1,34 @@
 package model.graph;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 
 public class Graph {
-    private final int size;
-    private final LinkedList<Edge> []adjacencyList;
+    private final int nodesCount;
+    private final int edgesCount;
+    private final HashMap<Node, LinkedList<Edge>> adjacencyListMap;
 
-    public Graph(int size) {
-        this.size = size;
-        adjacencyList = new LinkedList[size];
-        initializeAdjacencyList();
+    public Graph(int nodesCount, int edgesCount) {
+        this.nodesCount = nodesCount;
+        this.edgesCount = edgesCount;
+        this.adjacencyListMap = new HashMap<>(edgesCount);
     }
 
-    private void initializeAdjacencyList() {
-        for (int i = 0; i < this.size; i++) {
-            adjacencyList[i] = new LinkedList<>();
-        }
-    }
-
-    public int addEdge(Node first, Node second, int weight) {
+    public boolean addEdge(Node first, Node second, int weight) {
+        boolean res = true;
         Edge edge = new Edge(first, second, weight);
-        this.adjacencyList[first.getData()].addFirst(edge);
-        this.adjacencyList[second.getData()].addFirst(edge);
-        return 0;
+        LinkedList<Edge> firstLs = this.adjacencyListMap.get(first);
+        LinkedList<Edge> secondLs = this.adjacencyListMap.get(second);
+        if (firstLs == null) {
+            firstLs = new LinkedList<>();
+            res = false;
+        }
+        if (secondLs == null) {
+            secondLs = new LinkedList<>();
+            res = false;
+        }
+        firstLs.addFirst(edge);
+        secondLs.addFirst(edge);
+        return res;
     }
 }
