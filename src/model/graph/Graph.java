@@ -13,7 +13,7 @@ public class Graph {
         this.adjacencyListMap = new HashMap<>(edgesCount);
     }
 
-    public int[] dijkstra(Node src) {
+    private int[] dijkstra(Node src) {
         Set<Node> nodes = this.adjacencyListMap.keySet();
         if (!nodes.contains(src)) {
             return null;
