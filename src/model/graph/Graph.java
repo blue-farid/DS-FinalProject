@@ -29,7 +29,7 @@ public class Graph {
             Node minNode = pq.remove();
             if (!dones.contains(minNode)) {
                 dones.add(minNode);
-                processEdges(src, dones, distances, pq);
+                processEdges(minNode, dones, distances, pq);
             }
         }
         return distances;
