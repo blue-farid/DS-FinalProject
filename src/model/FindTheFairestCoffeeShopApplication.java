@@ -4,7 +4,6 @@ import model.graph.Graph;
 import model.graph.Node;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -121,7 +120,7 @@ public class FindTheFairestCoffeeShopApplication implements Runnable {
                 fairestNodes[0] = node;
             }
         }
-        for (Node node: keys) {
+        for (Node node : keys) {
             if (fairestNodes[0].getFairScore() == node.getFairScore()) {
                 fairestNodes[index++] = node;
             }
