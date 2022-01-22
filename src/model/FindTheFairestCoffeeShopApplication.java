@@ -4,6 +4,7 @@ import model.graph.Graph;
 import model.graph.Node;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -104,21 +105,31 @@ public class FindTheFairestCoffeeShopApplication implements Runnable {
         return graph;
     }
 
-    private Node findTheFairestCoffeeShop() {
-        Set<Node> keys = mainGraph.getNodes();
+    private Node[] findTheFairestCoffeeShops() {
+        Set<Node> keys = this.mainGraph.getNodes();
         float minFairScore = Float.MAX_VALUE;
-        Node fairestNode = null;
+        Node[] fairestNodes = new Node[this.mainGraph.getNodesCount()];
+        int index = 0;
         for (Node node : keys) {
-            node.setDijkstraResultsMap(mainGraph.dijkstra(node));
+            node.setDijkstraResultsMap(this.mainGraph.dijkstra(node));
         }
         for (Node node : keys) {
             float fairScore = calculateFairScore(node);
+            node.setFairScore(fairScore);
             if (minFairScore > fairScore) {
                 minFairScore = fairScore;
-                fairestNode = node;
+                fairestNodes[0] = node;
             }
         }
-        return fairestNode;
+        for (Node node: keys) {
+            if (fairestNodes[0].getFairScore() == node.getFairScore()) {
+                fairestNodes[index++] = node;
+            }
+        }
+        if (index < fairestNodes.length) {
+            fairestNodes[index] = null;
+        }
+        return fairestNodes;
     }
 
     private float calculateFairScore(Node node) {
@@ -142,9 +153,14 @@ public class FindTheFairestCoffeeShopApplication implements Runnable {
         if (this.people.size() < 2) {
             return -1;
         }
-        Node node = findTheFairestCoffeeShop();
-        String res = "The Fairest Score for " + this.people.toString() + " is "
-                + node;
+        Node[] nodes = findTheFairestCoffeeShops();
+        String res = "The Fairest Score for " + this.people.toString() + " is [";
+        for (int i = 0; i < nodes.length; i++) {
+            if (nodes[i] == null)
+                break;
+            res = res.concat(nodes[i].toString() + ", ");
+        }
+        res += "\b\b]";
         System.out.println(res);
         return 0;
     }
