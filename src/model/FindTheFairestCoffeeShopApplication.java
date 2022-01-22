@@ -129,9 +129,8 @@ public class FindTheFairestCoffeeShopApplication implements Runnable {
             int dijkstraRes = this.people.get(i).getNode().
                     getDijkstraResultsMap().get(node);
 
-            for (int j = 0; j < this.people.size() - 1; j++) {
-                if (j == i) // to ignore same node!
-                    continue;
+            for (int j = i + 1; j < this.people.size(); j++) {
+
                 total += Math.abs(dijkstraRes - this.people.get(j).getNode().
                         getDijkstraResultsMap().get(node));
                 counter++;
