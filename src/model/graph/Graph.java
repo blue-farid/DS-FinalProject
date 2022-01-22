@@ -101,4 +101,16 @@ public class Graph {
     public int getEdgesCount() {
         return edgesCount;
     }
+
+    public Node getNode(int nodeNum) {
+        Set<Node> keys = this.adjacencyListMap.keySet();
+        Iterator<Node> itr = keys.iterator();
+        while (itr.hasNext()) {
+            Node node = itr.next();
+            if (node.getData() == nodeNum) {
+                return node;
+            }
+        }
+        return null;
+    }
 }
