@@ -4,6 +4,7 @@ import model.graph.Graph;
 import model.graph.Node;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -40,7 +41,7 @@ public class FindTheFairestCoffeeShopApplication implements Runnable {
                 System.out.println(mainGraph.toString());
             } else if (ins[0].equalsIgnoreCase("exit")) {
                 System.exit(0);
-            }   else if (ins[0].equalsIgnoreCase("FairestScore")) {
+            }   else if (ins[0].equalsIgnoreCase("fairest")) {
                 if(printFairestScore() != 0) {
                     System.out.println("not enough person! add some person and try again!");
                 }
@@ -108,6 +109,7 @@ public class FindTheFairestCoffeeShopApplication implements Runnable {
         float minFairScore = Float.MAX_VALUE;
         Node fairestNode = null;
         for (Node node : keys) {
+            System.out.println(Arrays.toString(mainGraph.dijkstra(node)));
             node.setDijkstraResults(mainGraph.dijkstra(node));
         }
         for (Node node: keys) {
@@ -128,7 +130,7 @@ public class FindTheFairestCoffeeShopApplication implements Runnable {
                     getDijkstraResults()[node.getData() % mainGraph.getNodesCount()];
 
             for (int j = 0; j < this.people.size() - 1; j++) {
-                if (j == i)
+                if (j == i) // to ignore same node!
                     continue;
                 total += Math.abs(dijkstraRes - this.people.get(j).getNode().
                         getDijkstraResults()[node.getData() % mainGraph.getNodesCount()]);
@@ -141,8 +143,9 @@ public class FindTheFairestCoffeeShopApplication implements Runnable {
         if (this.people.size() < 2) {
             return -1;
         }
+        Node node = findTheFairestCoffeeShop();
         String res = "The Fairest Score for " + this.people.toString() + " is "
-                + findTheFairestCoffeeShop();
+                + node;
         System.out.println(res);
         return 0;
     }

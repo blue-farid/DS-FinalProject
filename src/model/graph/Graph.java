@@ -23,7 +23,7 @@ public class Graph {
         PriorityQueue<Node> pq = new PriorityQueue<>();
         src.setCost(0);
         pq.add(src);
-        distances[src.getData() % nodesCount] = 0;
+        distances[src.getData() % this.nodesCount] = 0;
         HashSet<Node> dones = new HashSet<>();
         while (!pq.isEmpty() && dones.size() != this.nodesCount) {
             Node minNode = pq.remove();
@@ -42,12 +42,12 @@ public class Graph {
         for (Edge edge : edges) {
             Node edgeNode = edge.getEdgeOf(node);
             edgeNode.setCost(edge.getWeight());
-            if (!dones.contains(node)) {
+            if (!dones.contains(edgeNode)) {
                 edgeDst = edgeNode.getCost();
-                newDst = distances[node.getData()] + edgeDst;
+                newDst = distances[node.getData() % this.nodesCount] + edgeDst;
 
-                if (newDst < distances[edgeNode.getData()]) {
-                    distances[edgeNode.getData()] = newDst;
+                if (newDst < distances[edgeNode.getData() % this.nodesCount]) {
+                    distances[edgeNode.getData() % this.nodesCount] = newDst;
                 }
                 pq.add(edgeNode);
             }

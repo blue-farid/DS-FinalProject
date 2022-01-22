@@ -1,8 +1,9 @@
 package model.graph;
 
+import java.util.Comparator;
 import java.util.Objects;
 
-public class Node implements Comparable<Node>{
+public class Node implements Comparable<Node>, Comparator<Node> {
     private final int data;
     private int cost;
     int[] dijkstraResults;
@@ -22,6 +23,11 @@ public class Node implements Comparable<Node>{
 
     public int getData() {
         return data;
+    }
+
+    @Override
+    public int compare(Node o1, Node o2) {
+        return o1.cost - o2.cost;
     }
 
     @Override
