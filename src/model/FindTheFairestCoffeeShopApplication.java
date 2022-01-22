@@ -60,6 +60,7 @@ public class FindTheFairestCoffeeShopApplication implements Runnable {
                         return -1;
                     }
                     addPerson(node);
+                    System.out.println(node + " has been added successfully!");
                 } catch (NumberFormatException e) {
                     return -1;
                 }
@@ -71,6 +72,7 @@ public class FindTheFairestCoffeeShopApplication implements Runnable {
                         return -1;
                     }
                     removePerson(node);
+                    System.out.println(node + " has been removed successfully!");
                 } catch (NumberFormatException e) {
                     return -1;
                 }
