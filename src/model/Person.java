@@ -23,6 +23,11 @@ public class Person {
     }
 
     @Override
+    public int hashCode() {
+        return Objects.hash(node);
+    }
+
+    @Override
     public String toString() {
         return node.toString();
     }
