@@ -113,8 +113,6 @@ public class FindTheFairestCoffeeShopApplication implements Runnable {
         }
         for (Node node : keys) {
             float fairScore = calculateFairScore(node);
-            System.out.println("node: " + node + " " + fairScore);
-            System.out.println(node.getDijkstraResultsMap());
             if (minFairScore > fairScore) {
                 minFairScore = fairScore;
                 fairestNode = node;
