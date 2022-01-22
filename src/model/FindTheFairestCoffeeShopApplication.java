@@ -5,13 +5,16 @@ import model.graph.Node;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Set;
 
 public class FindTheFairestCoffeeShopApplication implements Runnable {
-    private Graph mainGraph;
     private final ArrayList<Person> people;
+    private Graph mainGraph;
+
     public FindTheFairestCoffeeShopApplication() {
         people = new ArrayList<>();
     }
+
     @Override
     public void run() {
         Scanner scanner = new Scanner(System.in);
@@ -21,10 +24,10 @@ public class FindTheFairestCoffeeShopApplication implements Runnable {
 
     private void readMode(Scanner scanner) {
         while (true) {
-           int res = processInput(scanner.nextLine());
-           if (res != 0) {
-               System.out.println("wrong input!");
-           }
+            int res = processInput(scanner.nextLine());
+            if (res != 0) {
+                System.out.println("wrong input!");
+            }
         }
     }
 
@@ -49,6 +52,7 @@ public class FindTheFairestCoffeeShopApplication implements Runnable {
                         return -1;
                     }
                     addPerson(node);
+                    System.out.println("Fairest Node: " + findTheFairestCoffeeShop());
                 } catch (NumberFormatException e) {
                     return -1;
                 }
@@ -60,6 +64,7 @@ public class FindTheFairestCoffeeShopApplication implements Runnable {
                         return -1;
                     }
                     removePerson(node);
+                    System.out.println("Fairest Node: " + findTheFairestCoffeeShop());
                 } catch (NumberFormatException e) {
                     return -1;
                 }
@@ -91,5 +96,41 @@ public class FindTheFairestCoffeeShopApplication implements Runnable {
             sc.nextLine();
         }
         return graph;
+    }
+
+    private Node findTheFairestCoffeeShop() {
+        Set<Node> keys = mainGraph.getNodes();
+        float minFairScore = Float.MAX_VALUE;
+        Node fairestNode = null;
+        for (Node node : keys) {
+            node.setDijkstraResults(mainGraph.dijkstra(node));
+        }
+        for (Node node: keys) {
+            float fairScore = calculateFairScore(node);
+            if (minFairScore > fairScore) {
+                minFairScore = fairScore;
+                fairestNode = node;
+            }
+        }
+        return fairestNode;
+    }
+
+    private float calculateFairScore(Node node) {
+        int total = 0;
+        int counter = 0;
+        for (int i = 0; i < this.people.size(); i++) {
+            int dijkstraRes = this.people.get(i).getNode().
+                    getDijkstraResults()[node.getData()];
+
+            for (int j = 0; j < this.people.size() - 1; j++) {
+                if (j == i)
+                    continue;
+                total += Math.abs(dijkstraRes - this.people.get(j).getNode().
+                        getDijkstraResults()[node.getData()]);
+                counter++;
+            }
+        }
+        return (float) total / (float) counter;
+
     }
 }
