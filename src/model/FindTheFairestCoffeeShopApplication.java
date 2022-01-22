@@ -109,7 +109,7 @@ public class FindTheFairestCoffeeShopApplication implements Runnable {
         float minFairScore = Float.MAX_VALUE;
         Node fairestNode = null;
         for (Node node : keys) {
-            node.setDijkstraResults(mainGraph.dijkstra(node));
+            node.setDijkstraResultsMap(mainGraph.dijkstra(node));
         }
         for (Node node : keys) {
             float fairScore = calculateFairScore(node);
@@ -127,13 +127,13 @@ public class FindTheFairestCoffeeShopApplication implements Runnable {
         int counter = 0;
         for (int i = 0; i < this.people.size(); i++) {
             int dijkstraRes = this.people.get(i).getNode().
-                    getDijkstraResults()[node.getData() % mainGraph.getNodesCount()];
+                    getDijkstraResultsMap().get(node);
 
             for (int j = 0; j < this.people.size() - 1; j++) {
                 if (j == i) // to ignore same node!
                     continue;
                 total += Math.abs(dijkstraRes - this.people.get(j).getNode().
-                        getDijkstraResults()[node.getData() % mainGraph.getNodesCount()]);
+                        getDijkstraResultsMap().get(node));
                 counter++;
             }
         }

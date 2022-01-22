@@ -1,12 +1,13 @@
 package model.graph;
 
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Objects;
 
 public class Node implements Comparable<Node>, Comparator<Node> {
     private final int data;
     private int cost;
-    int[] dijkstraResults;
+    HashMap<Node, Integer> dijkstraResultsMap;
     private float fairScore;
 
     public void setCost(int cost) {
@@ -53,12 +54,12 @@ public class Node implements Comparable<Node>, Comparator<Node> {
         return this.cost - o.cost;
     }
 
-    public void setDijkstraResults(int[] dijkstraResults) {
-        this.dijkstraResults = dijkstraResults;
+    public void setDijkstraResultsMap(HashMap<Node, Integer> dijkstraResultsMap) {
+        this.dijkstraResultsMap = dijkstraResultsMap;
     }
 
-    public int[] getDijkstraResults() {
-        return dijkstraResults;
+    public HashMap<Node, Integer> getDijkstraResultsMap() {
+        return dijkstraResultsMap;
     }
 
     public void setFairScore(float fairScore) {

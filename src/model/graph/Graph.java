@@ -13,17 +13,17 @@ public class Graph {
         this.adjacencyListMap = new HashMap<>(edgesCount);
     }
 
-    public int[] dijkstra(Node src) {
+    public HashMap<Node, Integer> dijkstra(Node src) {
         Set<Node> nodes = this.adjacencyListMap.keySet();
         if (!nodes.contains(src)) {
             return null;
         }
-        int[] distances = new int[this.nodesCount];
+        HashMap<Node, Integer> distances = new HashMap<>(nodesCount);
         initDistances(distances);
         PriorityQueue<Node> pq = new PriorityQueue<>();
         src.setCost(0);
         pq.add(src);
-        distances[src.getData() % this.nodesCount] = 0;
+        distances.put(src, 0);
         HashSet<Node> dones = new HashSet<>();
         while (!pq.isEmpty() && dones.size() != this.nodesCount) {
             Node minNode = pq.remove();
@@ -35,7 +35,7 @@ public class Graph {
         return distances;
     }
 
-    private int processEdges(Node node, Set<Node> dones, int[] distances, PriorityQueue<Node> pq) {
+    private int processEdges(Node node, Set<Node> dones, HashMap<Node, Integer> distances, PriorityQueue<Node> pq) {
         int edgeDst, newDst;
         List<Edge> edges = this.adjacencyListMap.get(node);
 
@@ -44,18 +44,21 @@ public class Graph {
             edgeNode.setCost(edge.getWeight());
             if (!dones.contains(edgeNode)) {
                 edgeDst = edgeNode.getCost();
-                newDst = distances[node.getData() % this.nodesCount] + edgeDst;
+                newDst = distances.get(node) + edgeDst;
 
-                if (newDst < distances[edgeNode.getData() % this.nodesCount]) {
-                    distances[edgeNode.getData() % this.nodesCount] = newDst;
+                if (newDst < distances.get(edgeNode)) {
+                    distances.put(edgeNode, newDst);
                 }
                 pq.add(edgeNode);
             }
         }
         return 0;
     }
-    private int initDistances(int[] distances) {
-        Arrays.fill(distances, Integer.MAX_VALUE);
+    private int initDistances(HashMap<Node, Integer> distances) {
+        Set<Node> keys = this.adjacencyListMap.keySet();
+        for(Node node: keys) {
+            distances.put(node, Integer.MAX_VALUE);
+        }
         return 0;
     }
     public boolean addEdge(Node first, Node second, int weight) {
