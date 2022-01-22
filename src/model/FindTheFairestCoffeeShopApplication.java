@@ -4,7 +4,6 @@ import model.graph.Graph;
 import model.graph.Node;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -41,14 +40,13 @@ public class FindTheFairestCoffeeShopApplication implements Runnable {
                 System.out.println(mainGraph.toString());
             } else if (ins[0].equalsIgnoreCase("exit")) {
                 System.exit(0);
-            }   else if (ins[0].equalsIgnoreCase("fairest")) {
-                if(printFairestScore() != 0) {
+            } else if (ins[0].equalsIgnoreCase("fairest")) {
+                if (printFairestScore() != 0) {
                     System.out.println("not enough person! add some person and try again!");
                 }
             } else if (ins[0].equalsIgnoreCase("people")) {
                 System.out.println(people);
-            }
-            else {
+            } else {
                 return -1;
             }
         } else if (ins.length == 2) {
@@ -113,7 +111,7 @@ public class FindTheFairestCoffeeShopApplication implements Runnable {
         for (Node node : keys) {
             node.setDijkstraResults(mainGraph.dijkstra(node));
         }
-        for (Node node: keys) {
+        for (Node node : keys) {
             float fairScore = calculateFairScore(node);
             System.out.println("node: " + node + " " + fairScore);
             if (minFairScore > fairScore) {
@@ -141,6 +139,7 @@ public class FindTheFairestCoffeeShopApplication implements Runnable {
         }
         return (float) total / (float) counter;
     }
+
     private int printFairestScore() {
         if (this.people.size() < 2) {
             return -1;
