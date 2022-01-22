@@ -23,7 +23,7 @@ public class Graph {
         PriorityQueue<Node> pq = new PriorityQueue<>();
         src.setCost(0);
         pq.add(src);
-        distances[src.getData()] = 0;
+        distances[src.getData() % nodesCount] = 0;
         HashSet<Node> dones = new HashSet<>();
         while (!pq.isEmpty() && dones.size() != this.nodesCount) {
             Node minNode = pq.remove();

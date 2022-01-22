@@ -36,15 +36,22 @@ public class FindTheFairestCoffeeShopApplication implements Runnable {
         if (ins.length < 1) {
             return -1;
         } else if (ins.length == 1) {
-            if (ins[0].equals("test")) {
+            if (ins[0].equalsIgnoreCase("test")) {
                 System.out.println(mainGraph.toString());
-            } else if (ins[0].equals("exit")) {
+            } else if (ins[0].equalsIgnoreCase("exit")) {
                 System.exit(0);
-            } else {
+            }   else if (ins[0].equalsIgnoreCase("FairestScore")) {
+                if(printFairestScore() != 0) {
+                    System.out.println("not enough person! add some person and try again!");
+                }
+            } else if (ins[0].equalsIgnoreCase("people")) {
+                System.out.println(people);
+            }
+            else {
                 return -1;
             }
         } else if (ins.length == 2) {
-            if (ins[0].equals("join")) {
+            if (ins[0].equalsIgnoreCase("join")) {
                 try {
                     int nodeNum = Integer.parseInt(ins[1]);
                     Node node = mainGraph.getNode(nodeNum);
@@ -52,11 +59,10 @@ public class FindTheFairestCoffeeShopApplication implements Runnable {
                         return -1;
                     }
                     addPerson(node);
-                    System.out.println("Fairest Node: " + findTheFairestCoffeeShop());
                 } catch (NumberFormatException e) {
                     return -1;
                 }
-            } else if (ins[0].equals("left")) {
+            } else if (ins[0].equalsIgnoreCase("left")) {
                 try {
                     int nodeNum = Integer.parseInt(ins[1]);
                     Node node = mainGraph.getNode(nodeNum);
@@ -64,7 +70,6 @@ public class FindTheFairestCoffeeShopApplication implements Runnable {
                         return -1;
                     }
                     removePerson(node);
-                    System.out.println("Fairest Node: " + findTheFairestCoffeeShop());
                 } catch (NumberFormatException e) {
                     return -1;
                 }
@@ -120,17 +125,25 @@ public class FindTheFairestCoffeeShopApplication implements Runnable {
         int counter = 0;
         for (int i = 0; i < this.people.size(); i++) {
             int dijkstraRes = this.people.get(i).getNode().
-                    getDijkstraResults()[node.getData()];
+                    getDijkstraResults()[node.getData() % mainGraph.getNodesCount()];
 
             for (int j = 0; j < this.people.size() - 1; j++) {
                 if (j == i)
                     continue;
                 total += Math.abs(dijkstraRes - this.people.get(j).getNode().
-                        getDijkstraResults()[node.getData()]);
+                        getDijkstraResults()[node.getData() % mainGraph.getNodesCount()]);
                 counter++;
             }
         }
         return (float) total / (float) counter;
-
+    }
+    private int printFairestScore() {
+        if (this.people.size() < 2) {
+            return -1;
+        }
+        String res = "The Fairest Score for " + this.people.toString() + " is "
+                + findTheFairestCoffeeShop();
+        System.out.println(res);
+        return 0;
     }
 }

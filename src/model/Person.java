@@ -21,4 +21,9 @@ public class Person {
         Person person = (Person) o;
         return Objects.equals(node, person.node);
     }
+
+    @Override
+    public String toString() {
+        return node.toString();
+    }
 }
