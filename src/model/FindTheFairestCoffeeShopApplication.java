@@ -154,10 +154,10 @@ public class FindTheFairestCoffeeShopApplication implements Runnable {
         }
         Node[] nodes = findTheFairestCoffeeShops();
         String res = "The Fairest Score for " + this.people.toString() + " is [";
-        for (int i = 0; i < nodes.length; i++) {
-            if (nodes[i] == null)
+        for (Node node : nodes) {
+            if (node == null)
                 break;
-            res = res.concat(nodes[i].toString() + ", ");
+            res = res.concat(node.toString() + ", ");
         }
         res += "\b\b]";
         System.out.println(res);
