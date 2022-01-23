@@ -88,12 +88,12 @@ public class Graph {
     }
 
     /**
-     * Add edge boolean.
+     * Add edge to graph
      *
-     * @param first  the first
-     * @param second the second
-     * @param weight the weight
-     * @return the boolean
+     * @param first  the first node
+     * @param second the second node
+     * @param weight the weight of edge
+     * @return the result
      */
     public boolean addEdge(Node first, Node second, int weight) {
         boolean res = true;
@@ -151,8 +151,8 @@ public class Graph {
     /**
      * Gets node.
      *
-     * @param nodeNum the node num
-     * @return the node
+     * @param nodeNum the node data
+     * @return the node or null if node not found
      */
     public Node getNode(int nodeNum) {
         Set<Node> keys = this.adjacencyListMap.keySet();
@@ -167,7 +167,7 @@ public class Graph {
     /**
      * Gets nodes.
      *
-     * @return the nodes
+     * @return the nodes set
      */
     public Set<Node> getNodes() {
         return this.adjacencyListMap.keySet();
