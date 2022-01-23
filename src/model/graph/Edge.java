@@ -9,15 +9,7 @@ public class Edge {
         this.second = second;
         this.weight = weight;
     }
-
-    public Node getFirst() {
-        return first;
-    }
-
-    public Node getSecond() {
-        return second;
-    }
-
+    
     public int getWeight() {
         return weight;
     }
