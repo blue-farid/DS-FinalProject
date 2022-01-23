@@ -83,14 +83,12 @@ public class Graph {
 
     public String toString() {
         String res = "";
-        Iterator<Node> itr = this.adjacencyListMap.keySet().iterator();
-        while (itr.hasNext()) {
-            Node node = itr.next();
+        for (Node node : this.adjacencyListMap.keySet()) {
             List<Edge> edges = this.adjacencyListMap.get(node);
             res = res.concat(node.toString());
             res = res.concat(" edges: ");
-            for (int i = 0; i < edges.size(); i++) {
-                res = res.concat(edges.get(i).toString(node).concat(", "));
+            for (Edge edge : edges) {
+                res = res.concat(edge.toString(node).concat(", "));
             }
             res = res.concat("\n");
         }
@@ -107,9 +105,7 @@ public class Graph {
 
     public Node getNode(int nodeNum) {
         Set<Node> keys = this.adjacencyListMap.keySet();
-        Iterator<Node> itr = keys.iterator();
-        while (itr.hasNext()) {
-            Node node = itr.next();
+        for (Node node : keys) {
             if (node.getData() == nodeNum) {
                 return node;
             }
