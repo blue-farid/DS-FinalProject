@@ -2,17 +2,32 @@ package model.graph;
 
 import java.util.*;
 
+/**
+ * The Graph class
+ */
 public class Graph {
     private final int nodesCount;
     private final int edgesCount;
     private final HashMap<Node, LinkedList<Edge>> adjacencyListMap;
 
+    /**
+     * Instantiates a new Graph.
+     *
+     * @param nodesCount the nodes count
+     * @param edgesCount the edges count
+     */
     public Graph(int nodesCount, int edgesCount) {
         this.nodesCount = nodesCount;
         this.edgesCount = edgesCount;
         this.adjacencyListMap = new HashMap<>(edgesCount);
     }
 
+    /**
+     * do dijkstra algorithm on Graph
+     *
+     * @param src the source node
+     * @return the results (shortest path distances from source Node to each node) that store on a HashMap
+     */
     public HashMap<Node, Integer> dijkstra(Node src) {
         Set<Node> nodes = this.adjacencyListMap.keySet();
         if (!nodes.contains(src)) {
@@ -24,25 +39,32 @@ public class Graph {
         src.setCost(0);
         pq.add(src);
         distances.put(src, 0);
-        HashSet<Node> dones = new HashSet<>();
-        while (!pq.isEmpty() && dones.size() != this.nodesCount) {
+        HashSet<Node> settled = new HashSet<>();
+        while (!pq.isEmpty() && settled.size() != this.nodesCount) {
             Node minNode = pq.remove();
-            if (!dones.contains(minNode)) {
-                dones.add(minNode);
-                processEdges(minNode, dones, distances, pq);
+            if (!settled.contains(minNode)) {
+                settled.add(minNode);
+                processEdges(minNode, settled, distances, pq);
             }
         }
         return distances;
     }
 
-    private int processEdges(Node node, Set<Node> dones, HashMap<Node, Integer> distances, PriorityQueue<Node> pq) {
+    /**
+     * process Edges of a Node (a part of dijkstra algorithm)
+     * @param node the node
+     * @param settled settled nodes set
+     * @param distances distances HashMap
+     * @param pq PriorityQueue of nodes
+     */
+    private void processEdges(Node node, Set<Node> settled, HashMap<Node, Integer> distances, PriorityQueue<Node> pq) {
         int edgeDst, newDst;
         List<Edge> edges = this.adjacencyListMap.get(node);
 
         for (Edge edge : edges) {
             Node edgeNode = edge.getEdgeOf(node);
             edgeNode.setCost(edge.getWeight());
-            if (!dones.contains(edgeNode)) {
+            if (!settled.contains(edgeNode)) {
                 edgeDst = edgeNode.getCost();
                 newDst = distances.get(node) + edgeDst;
 
@@ -52,15 +74,27 @@ public class Graph {
                 pq.add(edgeNode);
             }
         }
-        return 0;
     }
-    private int initDistances(HashMap<Node, Integer> distances) {
+
+    /**
+     * initial distances for each node with MAX value
+     * @param distances HashMap
+     */
+    private void initDistances(HashMap<Node, Integer> distances) {
         Set<Node> keys = this.adjacencyListMap.keySet();
         for(Node node: keys) {
             distances.put(node, Integer.MAX_VALUE);
         }
-        return 0;
     }
+
+    /**
+     * Add edge boolean.
+     *
+     * @param first  the first
+     * @param second the second
+     * @param weight the weight
+     * @return the boolean
+     */
     public boolean addEdge(Node first, Node second, int weight) {
         boolean res = true;
         Edge edge = new Edge(first, second, weight);
@@ -81,6 +115,7 @@ public class Graph {
         return res;
     }
 
+    @Override
     public String toString() {
         String res = "";
         for (Node node : this.adjacencyListMap.keySet()) {
@@ -95,14 +130,30 @@ public class Graph {
         return res;
     }
 
+    /**
+     * Gets nodes count.
+     *
+     * @return the nodes count
+     */
     public int getNodesCount() {
         return nodesCount;
     }
 
+    /**
+     * Gets edges count.
+     *
+     * @return the edges count
+     */
     public int getEdgesCount() {
         return edgesCount;
     }
 
+    /**
+     * Gets node.
+     *
+     * @param nodeNum the node num
+     * @return the node
+     */
     public Node getNode(int nodeNum) {
         Set<Node> keys = this.adjacencyListMap.keySet();
         for (Node node : keys) {
@@ -113,6 +164,11 @@ public class Graph {
         return null;
     }
 
+    /**
+     * Gets nodes.
+     *
+     * @return the nodes
+     */
     public Set<Node> getNodes() {
         return this.adjacencyListMap.keySet();
     }
