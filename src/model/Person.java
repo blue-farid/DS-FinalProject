@@ -5,7 +5,7 @@ import model.graph.Node;
 import java.util.Objects;
 
 public class Person {
-    private Node node;
+    private final Node node;
 
     public Person(Node node) {
         this.node = node;
