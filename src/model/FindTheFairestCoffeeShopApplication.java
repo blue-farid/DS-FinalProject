@@ -7,14 +7,23 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Set;
 
+/**
+ * The Find the fairest coffee shop application.
+ */
 public class FindTheFairestCoffeeShopApplication implements Runnable {
     private final ArrayList<Person> people;
     private Graph mainGraph;
 
+    /**
+     * Instantiates a new Find the fairest coffee shop application.
+     */
     public FindTheFairestCoffeeShopApplication() {
         people = new ArrayList<>();
     }
 
+    /**
+     * the App starts from here.
+     */
     @Override
     public void run() {
         Scanner scanner = new Scanner(System.in);
@@ -22,6 +31,10 @@ public class FindTheFairestCoffeeShopApplication implements Runnable {
         readMode(scanner);
     }
 
+    /**
+     * the App goes to read mode, until termination.
+     * @param scanner read inputs with Scanner
+     */
     private void readMode(Scanner scanner) {
         while (true) {
             int res = processInput(scanner.nextLine());
@@ -31,6 +44,11 @@ public class FindTheFairestCoffeeShopApplication implements Runnable {
         }
     }
 
+    /**
+     * process inputs and send the right response to client.
+     * @param in process the 'in' String
+     * @return return 0 if and only if everything goes fine, and an negative integer if something failed.
+     */
     private int processInput(String in) {
         String[] ins = in.split(" ");
         if (ins.length < 1) {
@@ -83,14 +101,29 @@ public class FindTheFairestCoffeeShopApplication implements Runnable {
         return 0;
     }
 
-    private void addPerson(Node node) {
-        this.people.add(new Person(node));
+    /**
+     * add a Person to people list
+     * @param node pass the Node to Person constructor
+     * @return return the result
+     */
+    private boolean addPerson(Node node) {
+        return this.people.add(new Person(node));
     }
 
-    private void removePerson(Node node) {
-        this.people.remove(new Person(node));
+    /**
+     * remove a Person from people list
+     * @param node pass the Node to Person constructor
+     * @return return the result
+     */
+    private boolean removePerson(Node node) {
+        return this.people.remove(new Person(node));
     }
 
+    /**
+     * get graph from client based on a special format.
+     * @param sc read from stdin with Scanner
+     * @return return the Graph
+     */
     private Graph getGraphFromStdin(Scanner sc) {
         int nodesCount = sc.nextInt();
         int edgesCount = sc.nextInt();
@@ -104,6 +137,10 @@ public class FindTheFairestCoffeeShopApplication implements Runnable {
         return graph;
     }
 
+    /**
+     * find the fairest coffee shops nodes
+     * @return return the fairest coffee shops nodes on an array
+     */
     private Node[] findTheFairestCoffeeShops() {
         Set<Node> keys = this.mainGraph.getNodes();
         float minFairScore = Float.MAX_VALUE;
@@ -131,6 +168,11 @@ public class FindTheFairestCoffeeShopApplication implements Runnable {
         return fairestNodes;
     }
 
+    /**
+     * calculate the fair score of a node based on a special formula
+     * @param node the node
+     * @return return the fair score that is a float
+     */
     private float calculateFairScore(Node node) {
         int total = 0;
         int counter = 0;
@@ -148,6 +190,10 @@ public class FindTheFairestCoffeeShopApplication implements Runnable {
         return (float) total / (float) counter;
     }
 
+    /**
+     * prints fairest node (fairest coffee shop) in a specific format on console
+     * @return return 0 if and only if everything goes fine, and an negative integer if something failed.
+     */
     private int printFairestScore() {
         if (this.people.size() < 2) {
             return -1;
