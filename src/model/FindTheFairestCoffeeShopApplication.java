@@ -72,6 +72,10 @@ public class FindTheFairestCoffeeShopApplication implements Runnable {
                     removePerson(node);
                     System.out.println(node + " has been removed successfully!");
                 } catch (NumberFormatException e) {
+                    if (ins[1].equalsIgnoreCase("all")) {
+                        this.people.clear();
+                        return 0;
+                    }
                     return -1;
                 }
             } else {
