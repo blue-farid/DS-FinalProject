@@ -175,4 +175,29 @@ public class Graph {
     public Set<Node> getNodes() {
         return this.adjacencyListMap.keySet();
     }
+
+    private void DFSUtil(Node node, Node[] nodes, int index) {
+        nodes[index++] = node;
+        node.setVisited(true);
+        List<Edge> edges = this.adjacencyListMap.get(node);
+        for (Edge edge: edges) {
+            Node edgeNode = edge.getEdgeOf(node);
+            if (!edgeNode.isVisited()) {
+                DFSUtil(edgeNode, nodes, index);
+            }
+        }
+    }
+    public Node[] DFS(Node src) {
+        setAllNodesVisited(false);
+        int index = 0;
+        Node[] nodes = new Node[this.nodesCount];
+        DFSUtil(src, nodes, index);
+        return nodes;
+    }
+
+    public void setAllNodesVisited(boolean visited) {
+        for (Node node: this.getNodes()) {
+            node.setVisited(visited);
+        }
+    }
 }
