@@ -4,6 +4,7 @@ import model.FindTheFairestCoffeeShopApplication;
  * Algorithms and Data Structures final project.
  * @author Farid Masjedi
  * @since January 2022
+ * @version 1.0
  */
 public class Main {
 
