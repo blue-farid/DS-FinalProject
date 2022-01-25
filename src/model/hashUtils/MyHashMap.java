@@ -5,10 +5,10 @@ import java.util.*;
 public class MyHashMap <K, V> implements Map<K, V> {
     private ArrayList<HashNode<K, V>> buckets;
     private int size = 0;
-
+    private static final int INITIAL_CAPACITY = 10;
     public MyHashMap() {
         // initial capacity
-        this(10);
+        this(INITIAL_CAPACITY);
     }
 
     public MyHashMap(int capacity) {
@@ -47,6 +47,14 @@ public class MyHashMap <K, V> implements Map<K, V> {
 
     @Override
     public boolean containsValue(Object value) {
+        for (HashNode<K, V> hashNode: this.buckets) {
+            while (hashNode != null) {
+                if (hashNode.getValue().equals(value)) {
+                    return true;
+                }
+                hashNode = hashNode.getNext();
+            }
+        }
         return false;
     }
 
@@ -82,6 +90,7 @@ public class MyHashMap <K, V> implements Map<K, V> {
             }
             hashNode = hashNode.getNext();
         }
+        this.size++;
         hashNode = this.buckets.get(bucketIndex);
         HashNode<K, V> newHashNode = new HashNode<>(key, value, hashCode);
         newHashNode.setNext(hashNode);
@@ -112,28 +121,72 @@ public class MyHashMap <K, V> implements Map<K, V> {
     }
 
     @Override
-    public V remove(Object key) {
-        return null;
+    public V remove(Object o) {
+        K key;
+        try {
+            key = (K) o;
+        }catch (ClassCastException e) {
+            return null;
+        }
+        int bucketIndex = getBucketIndex(key);
+        int hashCode = hashCode(key);
+        HashNode<K, V> hashNode = this.buckets.get(bucketIndex);
+        HashNode<K, V> prevNode = null;
+        while (hashNode != null) {
+            if (hashNode.getKey().equals(key) &&
+                    hashNode.getHashCode() == hashCode)
+                break;
+            prevNode = hashNode;
+            hashNode = hashNode.getNext();
+        }
+        // if key not found
+        if (hashNode == null) {
+            return null;
+        }
+        this.size--;
+        // remove the key
+        if (prevNode != null) {
+            prevNode.setNext(hashNode.getNext());
+        } else {
+            this.buckets.set(bucketIndex, hashNode.getNext());
+        }
+        return hashNode.getValue();
     }
 
     @Override
     public void putAll(Map<? extends K, ? extends V> m) {
-
+        // does not need implementation for this project!
     }
 
     @Override
     public void clear() {
-
+        this.buckets = new ArrayList<>(INITIAL_CAPACITY);
     }
 
     @Override
     public Set<K> keySet() {
-        return null;
+        Set<K> keys = new HashSet<>();
+        for (HashNode<K, V> hashNode: this.buckets) {
+            keys.add(hashNode.getKey());
+        }
+        return keys;
     }
 
     @Override
     public Collection<V> values() {
-        return null;
+        List<V> values = new ArrayList<>();
+        for (HashNode<K, V> hashNode: this.buckets) {
+            while (hashNode != null) {
+                values.add(hashNode.getValue());
+                hashNode = hashNode.getNext();
+            }
+        }
+        return values;
+    }
+
+    @Override
+    public Set<Entry<K, V>> entrySet() {
+        return new HashSet<>(this.buckets);
     }
 
     private int hashCode(K key) {
