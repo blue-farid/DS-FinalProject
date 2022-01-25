@@ -15,6 +15,7 @@ import java.util.Set;
 public class FindTheFairestCoffeeShopApplication implements Runnable {
     private final ArrayList<Person> people;
     private Graph mainGraph;
+
     /**
      * Instantiates a new Find the fairest coffee shop application.
      */
@@ -88,6 +89,8 @@ public class FindTheFairestCoffeeShopApplication implements Runnable {
                 System.out.println(people);
             } else if (ins[0].equalsIgnoreCase("clear")) {
                 Console.clearScreen();
+            } else if (ins[0].equalsIgnoreCase("dfs")) {
+                this.mainGraph.DFS();
             } else {
                 return -1;
             }

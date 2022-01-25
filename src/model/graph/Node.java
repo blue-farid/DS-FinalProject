@@ -14,7 +14,6 @@ public class Node implements Comparable<Node>, Comparator<Node> {
     private int cost;
     private MyHashMap<Node, Integer> dijkstraResultsMap;
     private float fairScore;
-    private boolean visited;
 
     /**
      * Sets cost.
@@ -114,13 +113,5 @@ public class Node implements Comparable<Node>, Comparator<Node> {
      */
     public float getFairScore() {
         return fairScore;
-    }
-
-    public boolean isVisited() {
-        return visited;
-    }
-
-    public void setVisited(boolean visited) {
-        this.visited = visited;
     }
 }

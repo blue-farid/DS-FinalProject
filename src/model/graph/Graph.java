@@ -176,28 +176,35 @@ public class Graph {
         return this.adjacencyListMap.keySet();
     }
 
-    private void DFSUtil(Node node, Node[] nodes, int index) {
-        nodes[index++] = node;
-        node.setVisited(true);
+    private void DFSUtil(Node node, HashMap<Node, Boolean> visitedMap) {
+        System.out.print(node + ", ");
+        visitedMap.put(node, true);
         List<Edge> edges = this.adjacencyListMap.get(node);
         for (Edge edge: edges) {
             Node edgeNode = edge.getEdgeOf(node);
-            if (!edgeNode.isVisited()) {
-                DFSUtil(edgeNode, nodes, index);
+            if (!visitedMap.get(edgeNode)) {
+                DFSUtil(edgeNode, visitedMap);
             }
         }
     }
-    public Node[] DFS(Node src) {
-        setAllNodesVisited(false);
-        int index = 0;
-        Node[] nodes = new Node[this.nodesCount];
-        DFSUtil(src, nodes, index);
-        return nodes;
+    public void DFS() {
+        DFS(getNodes().iterator().next());
     }
 
-    public void setAllNodesVisited(boolean visited) {
-        for (Node node: this.getNodes()) {
-            node.setVisited(visited);
+    public void DFS(Node src) {
+        if (src == null) {
+            return;
+        }
+        HashMap<Node, Boolean> visitedMap = new HashMap<>();
+        setAllNodesVisited(visitedMap, false);
+        System.out.print("[");
+        DFSUtil(src, visitedMap);
+        System.out.println("\b\b]");
+    }
+
+    public void setAllNodesVisited(HashMap<Node, Boolean> visitedMap, boolean visited) {
+        for (Node node: getNodes()) {
+            visitedMap.put(node, false);
         }
     }
 }
