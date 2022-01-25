@@ -236,7 +236,7 @@ public class FindTheFairestCoffeeShopApplication implements Runnable {
             return -1;
         }
         Node[] nodes = findTheFairestCoffeeShops();
-        String res = "The Fairest Score for " + this.people.toString() + " is [";
+        String res = "The Fairest node/nodes for " + this.people.toString() + " is [";
         for (Node node : nodes) {
             if (node == null)
                 break;
