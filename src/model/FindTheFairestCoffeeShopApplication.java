@@ -1,5 +1,7 @@
 package model;
 
+import consoleUtils.Console;
+import consoleUtils.ConsoleColor;
 import model.graph.Graph;
 import model.graph.Node;
 
@@ -13,7 +15,6 @@ import java.util.Set;
 public class FindTheFairestCoffeeShopApplication implements Runnable {
     private final ArrayList<Person> people;
     private Graph mainGraph;
-
     /**
      * Instantiates a new Find the fairest coffee shop application.
      */
@@ -26,17 +27,23 @@ public class FindTheFairestCoffeeShopApplication implements Runnable {
      */
     @Override
     public void run() {
+        Console.initializeConsole();
+        Console.setColor(ConsoleColor.TEXT_CYAN_BRIGHT);
         Scanner scanner = new Scanner(System.in);
-        try {
-            while (true) {
+        System.out.println("initialize the graph please...");
+        while (true) {
+            try {
                 this.mainGraph = getGraphFromStdin(scanner);
                 if (this.mainGraph != null) {
+                    Console.setColor(ConsoleColor.TEXT_CYAN_BRIGHT);
                     System.out.println("the graph initialized successfully!");
                     break;
                 }
+            } catch (Exception e) {
+                Console.setColor(ConsoleColor.TEXT_CYAN_BRIGHT);
+                scanner = new Scanner(System.in); // to ignore bad inputs.
+                System.out.println("something went wrong! try again!");
             }
-        } catch (Exception e) {
-            System.out.println("something went wrong! try again!");
         }
         readMode(scanner);
     }
@@ -48,6 +55,7 @@ public class FindTheFairestCoffeeShopApplication implements Runnable {
      */
     private void readMode(Scanner scanner) {
         while (true) {
+            Console.setColor(ConsoleColor.TEXT_RED_BRIGHT);
             int res = processInput(scanner.nextLine());
             if (res != 0) {
                 System.out.println("wrong input!");
@@ -62,6 +70,7 @@ public class FindTheFairestCoffeeShopApplication implements Runnable {
      * @return return 0 if and only if everything goes fine, and an negative integer if something failed.
      */
     private int processInput(String in) {
+        Console.setColor(ConsoleColor.TEXT_CYAN_BRIGHT);
         String[] ins = in.split(" ");
         if (ins.length < 1) {
             return -1;
@@ -69,6 +78,7 @@ public class FindTheFairestCoffeeShopApplication implements Runnable {
             if (ins[0].equalsIgnoreCase("graph")) {
                 System.out.println(mainGraph.toString());
             } else if (ins[0].equalsIgnoreCase("exit")) {
+                Console.setColor(ConsoleColor.RESET);
                 System.exit(0);
             } else if (ins[0].equalsIgnoreCase("fairest")) {
                 if (printFairestScore() != 0) {
@@ -77,7 +87,7 @@ public class FindTheFairestCoffeeShopApplication implements Runnable {
             } else if (ins[0].equalsIgnoreCase("people")) {
                 System.out.println(people);
             } else if (ins[0].equalsIgnoreCase("clear")) {
-
+                Console.clearScreen();
             } else {
                 return -1;
             }
@@ -146,6 +156,7 @@ public class FindTheFairestCoffeeShopApplication implements Runnable {
      * @return return the Graph
      */
     private Graph getGraphFromStdin(Scanner sc) throws Exception {
+        Console.setColor(ConsoleColor.TEXT_RED_BRIGHT);
         int nodesCount = sc.nextInt();
         int edgesCount = sc.nextInt();
         Graph graph = new Graph(nodesCount, edgesCount);

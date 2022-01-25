@@ -15,7 +15,17 @@ public class Console {
     }
 
     public static void setColor(ConsoleColor color) {
-        System.out.println(color);
+        System.out.println(color.getValue());
+    }
+
+    public static void initializeConsole() {
+        try {
+            int display = new ProcessBuilder("cmd", "/c", "color", "00").inheritIO().start().waitFor();
+            System.out.print(display);
+            clearScreen();
+        } catch (InterruptedException | IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }
