@@ -116,6 +116,7 @@ public class FindTheFairestCoffeeShopApplication implements Runnable {
                 } catch (NumberFormatException e) {
                     if (ins[1].equalsIgnoreCase("all")) {
                         this.people.clear();
+                        System.out.println("the people list has been cleared successfully!");
                         return 0;
                     }
                     return -1;
