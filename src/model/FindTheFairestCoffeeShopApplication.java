@@ -54,7 +54,7 @@ public class FindTheFairestCoffeeShopApplication implements Runnable {
         if (ins.length < 1) {
             return -1;
         } else if (ins.length == 1) {
-            if (ins[0].equalsIgnoreCase("test")) {
+            if (ins[0].equalsIgnoreCase("graph")) {
                 System.out.println(mainGraph.toString());
             } else if (ins[0].equalsIgnoreCase("exit")) {
                 System.exit(0);
