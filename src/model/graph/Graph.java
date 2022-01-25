@@ -182,7 +182,7 @@ public class Graph {
         List<Edge> edges = this.adjacencyListMap.get(node);
         for (Edge edge: edges) {
             Node edgeNode = edge.getEdgeOf(node);
-            if (!visitedMap.get(edgeNode)) {
+            if (visitedMap.get(edgeNode) == null) {
                 DFSUtil(edgeNode, visitedMap);
             }
         }
@@ -196,15 +196,8 @@ public class Graph {
             return;
         }
         HashMap<Node, Boolean> visitedMap = new HashMap<>();
-        setAllNodesVisited(visitedMap, false);
         System.out.print("[");
         DFSUtil(src, visitedMap);
         System.out.println("\b\b]");
-    }
-
-    public void setAllNodesVisited(HashMap<Node, Boolean> visitedMap, boolean visited) {
-        for (Node node: getNodes()) {
-            visitedMap.put(node, false);
-        }
     }
 }
