@@ -2,7 +2,7 @@ package model.hashUtils;
 
 import java.util.*;
 
-public class MyHashMap <K, V> implements Map<K, V> {
+public class MyHashMap <K, V> extends HashMap<K, V> {
     private ArrayList<HashNode<K, V>> buckets;
     private int size = 0;
     private static final int INITIAL_CAPACITY = 10;
@@ -13,8 +13,14 @@ public class MyHashMap <K, V> implements Map<K, V> {
 
     public MyHashMap(int capacity) {
         this.buckets = new ArrayList<>(capacity);
+        initList(this.buckets, capacity);
     }
 
+    private void initList(List ls,int capacity) {
+        for (int i = 0; i < capacity; i++) {
+            ls.add(null);
+        }
+    }
     @Override
     public int size() {
         return size;
@@ -103,11 +109,9 @@ public class MyHashMap <K, V> implements Map<K, V> {
         if ((1.0 * size) / this.buckets.size() >= 0.8) {
             ArrayList<HashNode<K, V> > temp = this.buckets;
             int numBuckets = this.buckets.size() * 2;
-            this.buckets = new ArrayList<>();
+            this.buckets = new ArrayList<>(numBuckets);
+            initList(this.buckets, numBuckets);
             this.size = 0;
-            for (int i = 0; i < numBuckets; i++)
-                this.buckets.add(null);
-
             for (HashNode<K, V> hashNode : temp) {
                 while (hashNode != null) {
                     put(hashNode.getKey(), hashNode.getValue());
@@ -167,7 +171,10 @@ public class MyHashMap <K, V> implements Map<K, V> {
     public Set<K> keySet() {
         Set<K> keys = new HashSet<>();
         for (HashNode<K, V> hashNode: this.buckets) {
-            keys.add(hashNode.getKey());
+            while (hashNode != null) {
+                keys.add(hashNode.getKey());
+                hashNode = hashNode.getNext();
+            }
         }
         return keys;
     }
@@ -186,7 +193,14 @@ public class MyHashMap <K, V> implements Map<K, V> {
 
     @Override
     public Set<Entry<K, V>> entrySet() {
-        return new HashSet<>(this.buckets);
+        Set<Entry<K, V>> entrySet = new HashSet<>();
+        for (HashNode<K, V> hashNode: this.buckets) {
+            while (hashNode != null) {
+                entrySet.add(hashNode);
+                hashNode = hashNode.getNext();
+            }
+        }
+        return entrySet;
     }
 
     private int hashCode(K key) {
