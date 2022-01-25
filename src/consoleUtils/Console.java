@@ -14,4 +14,8 @@ public class Console {
         } catch (IOException | InterruptedException ex) {}
     }
 
+    public static void setColor(ConsoleColor color) {
+        System.out.println(color);
+    }
+
 }
