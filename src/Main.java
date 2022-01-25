@@ -1,7 +1,9 @@
 import model.FindTheFairestCoffeeShopApplication;
 
 /**
- * The Main class
+ * Algorithms and Data Structures final project.
+ * @author Farid Masjedi
+ * @since January 2022
  */
 public class Main {
 
