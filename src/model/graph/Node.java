@@ -1,5 +1,7 @@
 package model.graph;
 
+import model.hashUtils.MyHashMap;
+
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Objects;
@@ -10,7 +12,7 @@ import java.util.Objects;
 public class Node implements Comparable<Node>, Comparator<Node> {
     private final int data;
     private int cost;
-    private HashMap<Node, Integer> dijkstraResultsMap;
+    private MyHashMap<Node, Integer> dijkstraResultsMap;
     private float fairScore;
 
     /**
@@ -82,7 +84,7 @@ public class Node implements Comparable<Node>, Comparator<Node> {
      *
      * @param dijkstraResultsMap the dijkstra results map
      */
-    public void setDijkstraResultsMap(HashMap<Node, Integer> dijkstraResultsMap) {
+    public void setDijkstraResultsMap(MyHashMap<Node, Integer> dijkstraResultsMap) {
         this.dijkstraResultsMap = dijkstraResultsMap;
     }
 

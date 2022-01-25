@@ -90,6 +90,10 @@ public class FindTheFairestCoffeeShopApplication implements Runnable {
                     removePerson(node);
                     System.out.println(node + " has been removed successfully!");
                 } catch (NumberFormatException e) {
+                    if (ins[1].equalsIgnoreCase("all")) {
+                        this.people.clear();
+                        return 0;
+                    }
                     return -1;
                 }
             } else {
@@ -147,7 +151,9 @@ public class FindTheFairestCoffeeShopApplication implements Runnable {
         Node[] fairestNodes = new Node[this.mainGraph.getNodesCount()];
         int index = 0;
         for (Node node : keys) {
-            node.setDijkstraResultsMap(this.mainGraph.dijkstra(node));
+            if (node.getDijkstraResultsMap() == null) {
+                node.setDijkstraResultsMap(this.mainGraph.dijkstra(node));
+            }
         }
         for (Node node : keys) {
             float fairScore = calculateFairScore(node);

@@ -1,5 +1,7 @@
 package model.graph;
 
+import model.hashUtils.MyHashMap;
+
 import java.util.*;
 
 /**
@@ -22,18 +24,19 @@ public class Graph {
         this.adjacencyListMap = new HashMap<>(edgesCount);
     }
 
+
     /**
      * do dijkstra algorithm on Graph
      *
      * @param src the source node
      * @return the results (shortest path distances from source Node to each node) that store on a HashMap
      */
-    public HashMap<Node, Integer> dijkstra(Node src) {
+    public MyHashMap<Node, Integer> dijkstra(Node src) {
         Set<Node> nodes = this.adjacencyListMap.keySet();
         if (!nodes.contains(src)) {
             return null;
         }
-        HashMap<Node, Integer> distances = new HashMap<>(nodesCount);
+        MyHashMap<Node, Integer> distances = new MyHashMap<>(nodesCount);
         initDistances(distances);
         PriorityQueue<Node> pq = new PriorityQueue<>();
         src.setCost(0);
