@@ -15,7 +15,7 @@ public class Console {
     }
 
     public static void setColor(ConsoleColor color) {
-        System.out.println(color.getValue());
+        System.out.print(color.getValue());
     }
 
     public static void initializeConsole() {
