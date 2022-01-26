@@ -233,7 +233,8 @@ public class FindTheFairestCoffeeShopApplication implements Runnable {
     /**
      * prints fairest node (fairest coffee shop) in a specific format on console
      *
-     * @return return 0 if and only if everything goes fine, and an negative integer if something failed.
+     * @return return 0 if and only if everything goes fine,
+     * and an negative integer if something failed.
      */
     private int printFairestScore() {
         if (this.people.size() < 2) {
