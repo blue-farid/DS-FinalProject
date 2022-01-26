@@ -176,6 +176,11 @@ public class Graph {
         return this.adjacencyListMap.keySet();
     }
 
+    /**
+     * helps to the DFS method
+     * @param node
+     * @param visitedMap
+     */
     private void DFSUtil(Node node, HashMap<Node, Boolean> visitedMap) {
         System.out.print(node + ", ");
         visitedMap.put(node, true);
@@ -187,10 +192,19 @@ public class Graph {
             }
         }
     }
+
+    /**
+     * calls the DFS method with an initial node
+     */
     public void DFS() {
         DFS(getNodes().iterator().next());
     }
 
+    /**
+     * iterate the graph from a source and print each node
+     * with Depth-First-Search algorithm
+     * @param src the source node
+     */
     public void DFS(Node src) {
         if (src == null) {
             return;
