@@ -105,6 +105,11 @@ public class FindTheFairestCoffeeShopApplication implements Runnable {
                     addPerson(node);
                     System.out.println(node + " has been added successfully!");
                 } catch (NumberFormatException e) {
+                    if (ins[1].equalsIgnoreCase("all")) {
+                        addAllPersons();
+                        System.out.println("all of the nodes have been added successfully!");
+                        return 0;
+                    }
                     return -1;
                 }
             } else if (ins[0].equalsIgnoreCase("left")) {
@@ -133,6 +138,11 @@ public class FindTheFairestCoffeeShopApplication implements Runnable {
         return 0;
     }
 
+    private void addAllPersons() {
+        for (Node node: this.mainGraph.getNodes()) {
+            addPerson(node);
+        }
+    }
     /**
      * add a Person to people list
      *
